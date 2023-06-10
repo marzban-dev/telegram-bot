@@ -8,7 +8,6 @@ dotenv.config();
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
 bot.use(async (ctx, next) => {
-
     next(ctx);
 });
 
