@@ -20,21 +20,22 @@ module.exports = async (request, response) => {
     try {
         const bot = new TelegramBot(process.env.TELEGRAM_TOKEN);
 
+        bot.on("message", (msg) => {
+            bot.sendMessage(msg.chat.id, "I am alive!");
+        });
+
         if (request.body && request.body.message) {
             // Retrieve the ID for this chat
             // and the text that the user sent
             const {
-                chat: { id },
+                chat: { id, type },
                 text,
             } = request.body.message;
 
-            // Create a message to send back
-            // We can use Markdown inside this
-            const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-
-            // Send our new message back in Markdown and
-            // wait for the request to finish
-            await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+            if (type !== "group") {
+                const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+                await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+            }
         }
     } catch (error) {
         // can log it into the Vercel console
