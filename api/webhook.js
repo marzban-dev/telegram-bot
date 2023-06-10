@@ -39,7 +39,7 @@ module.exports = async (request, response) => {
         }
     } catch (error) {
         // can log it into the Vercel console
-        console.log(process.env.TELEGRAM_TOKEN);
+        console.log(error);
         console.error("Error sending message");
     }
 
