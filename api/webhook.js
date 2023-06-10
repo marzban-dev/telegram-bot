@@ -18,11 +18,9 @@ process.env.NTBA_FIX_319 = "test";
 
 module.exports = async (request, response) => {
     try {
-        const { body } = request;
-
         const bot = new TelegramBot(process.env.TELEGRAM_TOKEN);
 
-        if (body.message) {
+        if (request.body && request.body.message) {
             console.log(body);
             // Retrieve the ID for this chat
             // and the text that the user sent
@@ -41,7 +39,7 @@ module.exports = async (request, response) => {
         }
     } catch (error) {
         // can log it into the Vercel console
-        console.log(process.env.TELEGRAM_TOKEN)
+        console.log(process.env.TELEGRAM_TOKEN);
         console.error("Error sending message");
     }
 
