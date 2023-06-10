@@ -31,7 +31,10 @@ module.exports = async (request, response) => {
 
             console.log(request.body);
 
-            if (text === "/israel_deadline") {
+            if (type === "group" || type === "supergroup") {
+            }
+
+            if (text.includes("/israel_deadline")) {
                 const startDate = new Date("March 21, 2015");
                 const endDate = new Date("March 21, 2040");
 
