@@ -21,13 +21,12 @@ module.exports = async (request, response) => {
         const bot = new TelegramBot(process.env.TELEGRAM_TOKEN);
 
         if (request.body && request.body.message) {
-            console.log(body);
             // Retrieve the ID for this chat
             // and the text that the user sent
             const {
                 chat: { id },
                 text,
-            } = body.message;
+            } = request.body.message;
 
             // Create a message to send back
             // We can use Markdown inside this
