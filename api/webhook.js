@@ -31,7 +31,7 @@ module.exports = async (request, response) => {
                 chat: { id, type },
                 text,
             } = request.body.message;
-
+            console.log(type)
             if (type !== "group") {
                 const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
                 await bot.sendMessage(id, message, { parse_mode: "Markdown" });
