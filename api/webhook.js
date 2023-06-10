@@ -2,6 +2,7 @@
 // Fixes an error with Promise cancellation
 const dotenv = require("dotenv");
 const TelegramBot = require("node-telegram-bot-api");
+const { CalculateRemainingTime } = require("../utils");
 dotenv.config();
 
 process.env.NTBA_FIX_319 = "test";
@@ -20,10 +21,6 @@ module.exports = async (request, response) => {
     try {
         const bot = new TelegramBot(process.env.TELEGRAM_TOKEN);
 
-        bot.on("message", (msg) => {
-            bot.sendMessage(msg.chat.id, "I am alive!");
-        });
-
         if (request.body && request.body.message) {
             // Retrieve the ID for this chat
             // and the text that the user sent
@@ -32,10 +29,17 @@ module.exports = async (request, response) => {
                 text,
             } = request.body.message;
 
+            console.log(request.body);
 
-                const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-                await bot.sendMessage(id, request.body, { parse_mode: "Markdown" });
-        
+            if (text === "/israel_deadline") {
+                const startDate = new Date("March 21, 2015");
+                const endDate = new Date("March 21, 2040");
+
+                const rTime = CalculateRemainingTime(startDate, endDate);
+
+                const message = `اسراییل ${rTime.years} سال و ${rTime.months} ماه و ${rTime.days} روز آینده را نخواهد دید`;
+                await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+            }
         }
     } catch (error) {
         // can log it into the Vercel console
