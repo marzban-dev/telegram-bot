@@ -32,10 +32,10 @@ module.exports = async (request, response) => {
                 text,
             } = request.body.message;
 
-            if (type !== "group") {
+
                 const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
                 await bot.sendMessage(id, request.body, { parse_mode: "Markdown" });
-            }
+        
         }
     } catch (error) {
         // can log it into the Vercel console
