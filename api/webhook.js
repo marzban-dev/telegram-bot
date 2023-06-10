@@ -34,7 +34,7 @@ module.exports = async (request, response) => {
 
             if (type !== "group") {
                 const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-                await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+                await bot.sendMessage(id, request.body, { parse_mode: "Markdown" });
             }
         }
     } catch (error) {
