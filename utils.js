@@ -107,7 +107,7 @@ exports.Health = () => {
     const progress = Array.from({ length: Math.floor(endDate - currentDate) })
         .map(() => "=")
         .join("");
-    const fullProgress = Array.from({ length: 25 }).map(() => "-");
+    const fullProgress = Array.from({ length: 25 }).map(() => " -");
     fullProgress.splice(0, progress.length);
-    return "Israel Health [" + progress + fullProgress.join("") + "]";
+    return "Israel Health \[" + progress + fullProgress.join("") + "\]";
 };
