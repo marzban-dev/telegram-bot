@@ -109,5 +109,5 @@ exports.Health = () => {
         .join("");
     const fullProgress = Array.from({ length: 25 }).map(() => " -");
     fullProgress.splice(0, progress.length);
-    return "Israel Health (" + progress + fullProgress.join("") + ")";
+    return "Israel Health \n(" + progress + fullProgress.join("") + ")";
 };
