@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const TelegramBot = require("node-telegram-bot-api");
 const { CalculateRemainingTime, Health } = require("../utils");
+const axios = require("axios").default;
 dotenv.config();
 
 process.env.NTBA_FIX_319 = "test";
@@ -33,6 +34,37 @@ module.exports = async (request, response) => {
             if (text.includes("/israel_health")) {
                 const health = Health();
                 await bot.sendMessage(id, health, { parse_mode: "Markdown" });
+            }
+
+            if (text.includes("هوای")) {
+                const city = text.split(" ")[1];
+
+                const response = await axios.get(
+                    `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_APT_TOKEN}&q=${city}&aqi=no`
+                );
+
+                if (response.status === 400) {
+                    await bot.sendMessage(id, "مکان یافت نشد", { parse_mode: "Markdown" });
+                }
+
+                const { location, current } = response.data;
+
+                const message = `
+                    آب و هوای شهر ${location.name} در کشور ${location.country}
+                    \n
+                    \n
+                    وضعیت ${current.condition.text}
+                    \n
+                    دما ${current.temp_c} درجه سلسیوس
+                    \n
+                    وزش باد ${current.wind_kph} km/h
+                    \n
+                    رطوبت ${current.humidity} %
+                    \n
+                    ابر ${current.cloud} %
+                `;
+
+                await bot.sendPhoto(id, `https:${current.condition.icon}`, { caption: message });
             }
         }
     } catch (error) {
