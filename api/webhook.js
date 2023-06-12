@@ -49,17 +49,26 @@ module.exports = async (request, response) => {
 
                 const { location, current } = response.data;
 
-                const message = `
-آب و هوای شهر ${location.name} در کشور ${location.country}
-\n
-${"🌏" + " وضعیت " + current.condition.text}
-${"🌡️" + " دما " + current.temp_c + " درجه سلسیوس "}
-${"💨" + " وزش باد " + current.wind_kph + " کیلومتر بر ساعت "}
-${"💧" + " رطوبت " + current.humidity + " درصد "}
-${"☁️" + " ابر " + current.cloud + " درصد "}
-                `;
+                const message =
+                    `آب و هوای شهر ${location.name} در کشور ${location.country}\n` +
+                    ("🌏" + " وضعیت " + current.condition.text) +
+                    ("🌡️" + " دما " + current.temp_c + " درجه سلسیوس ") +
+                    ("💨" + " وزش باد " + current.wind_kph + " کیلومتر بر ساعت ") +
+                    ("💧" + " رطوبت " + current.humidity + " درصد ") +
+                    ("☁️" + " ابر " + current.cloud + " درصد ");
 
                 await bot.sendPhoto(id, `https:${current.condition.icon}`, { caption: message });
+            }
+
+            if (text.includes("بازیر")) {
+                const message =
+                    "1️⃣ | 2️⃣ | 3️⃣\n" +
+                    "➖ | ➖ | ➖\n" +
+                    "4️⃣ | 5️⃣ | 6️⃣\n" +
+                    "➖ | ➖ | ➖\n" +
+                    "7️⃣ | 8️⃣ | 9️⃣";
+
+                await bot.sendMessage(id, message, { parse_mode: "Markdown" });
             }
         }
     } catch (error) {
