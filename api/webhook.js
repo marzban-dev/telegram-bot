@@ -50,18 +50,18 @@ module.exports = async (request, response) => {
                 const { location, current } = response.data;
 
                 const message = `
-                    آب و هوای شهر ${location.name} در کشور ${location.country}
-                    \n
-                    \n
-                    وضعیت ${current.condition.text}
-                    \n
-                    دما ${current.temp_c} درجه سلسیوس
-                    \n
-                    وزش باد ${current.wind_kph} km/h
-                    \n
-                    رطوبت ${current.humidity} %
-                    \n
-                    ابر ${current.cloud} %
+آب و هوای شهر ${location.name} در کشور ${location.country}
+\n
+\n
+وضعیت ${current.condition.text}
+\n
+دما ${current.temp_c} درجه سلسیوس
+\n
+وزش باد km/h ${current.wind_kph}
+\n
+رطوبت %${current.humidity}
+\n
+ابر %${current.cloud}
                 `;
 
                 await bot.sendPhoto(id, `https:${current.condition.icon}`, { caption: message });
